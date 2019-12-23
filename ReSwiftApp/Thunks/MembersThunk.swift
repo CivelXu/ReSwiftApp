@@ -9,14 +9,14 @@
 import ReSwift
 import ReSwiftThunk
 
-let fetchNewMembers = Thunk<MainState> { dispatch, getState in
+let fetchNewMembers = Thunk<AppState> { dispatch, getState in
     guard var state = getState() else { return }
     fetchNetwork(page: 0, append: false, dispatch: dispatch)
 }
 
-let fetchNextPageMembers = Thunk<MainState> { dispatch, getState in
+let fetchNextPageMembers = Thunk<AppState> { dispatch, getState in
     guard let state = getState() else { return }
-    let page = state.currentPage
+    let page = state.members.currentPage
     fetchNetwork(page: page, append: true, dispatch: dispatch)
 }
 
@@ -24,8 +24,8 @@ fileprivate func fetchNetwork(page: Int, append: Bool, dispatch: @escaping Dispa
     API.getMembers(page: page).requestArray(
         model: Member.self,
         success: { models in
-            dispatch(MainStateAction.addMembers(members: models, append: append))
+            dispatch(MembersAction.addMembers(members: models, append: append))
     }) { (error) in
-        dispatch(MainStateAction.requestMemberError(error: error, append: append))
+        dispatch(MembersAction.requestMemberError(error: error, append: append))
     }
 }

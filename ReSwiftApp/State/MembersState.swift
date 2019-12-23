@@ -12,6 +12,12 @@ import ReSwiftThunk
 let thunksMiddleware: Middleware<MainState> = createThunkMiddleware()
 let mainStore = Store<MainState>(reducer: mainReducer, state: nil, middleware: [thunksMiddleware])
 
+enum LoadingStatus {
+    case none
+    case loading
+    case end
+}
+
 struct MainState: StateType {
 
     var currentPage: Int = 0
@@ -25,6 +31,7 @@ struct MainState: StateType {
     var isNoMoreData = false
 
 }
+
 
 func mainReducer(action: Action, state: MainState?) -> MainState {
 
@@ -46,7 +53,6 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
         if !append {
             state.currentPage = 0
             state.members.removeAll()
-        } else {
         }
         state.endHeaderFresh = !append
         state.endFooterFresh = append
