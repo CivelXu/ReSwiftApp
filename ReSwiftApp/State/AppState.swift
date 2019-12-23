@@ -6,4 +6,12 @@
 //  Copyright © 2019 Civel Xu. All rights reserved.
 //
 
-import Foundation
+import ReSwift
+import ReSwiftThunk
+
+let thunksMiddleware: Middleware<AppState> = createThunkMiddleware()
+let appStore = Store<AppState>(reducer: qppReducer, state: nil, middleware: [thunksMiddleware])
+
+struct AppState: StateType {
+    var members: MembersState
+}

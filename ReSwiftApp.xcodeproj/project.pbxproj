@@ -10,6 +10,9 @@
 		6A655B53822ACC4F06E16C22 /* Pods_ReSwiftAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F4905727EC8A8D20B4D1CB4 /* Pods_ReSwiftAppTests.framework */; };
 		79880BE41503DD48C513C68C /* Pods_ReSwiftApp_ReSwiftAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 706A9B87138D91FC325D2664 /* Pods_ReSwiftApp_ReSwiftAppUITests.framework */; };
 		A05648434D41EECD39EA0191 /* Pods_ReSwiftApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EB4C388FF14828ACFE009F /* Pods_ReSwiftApp.framework */; };
+		CED4617323B06747008E9021 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4617223B06747008E9021 /* AppState.swift */; };
+		CED4617623B0687D008E9021 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4617523B0687D008E9021 /* AppReducer.swift */; };
+		CED4617823B0690C008E9021 /* MembersReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4617723B0690C008E9021 /* MembersReducer.swift */; };
 		CEF4131523AA046200658735 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4131423AA046200658735 /* AppDelegate.swift */; };
 		CEF4131723AA046200658735 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4131623AA046200658735 /* SceneDelegate.swift */; };
 		CEF4131923AA046200658735 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4131823AA046200658735 /* ViewController.swift */; };
@@ -27,9 +30,9 @@
 		CEF4135623AA0BF600658735 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4135523AA0BF600658735 /* Member.swift */; };
 		CEF4135823AA0C5300658735 /* HeadImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4135723AA0C5300658735 /* HeadImg.swift */; };
 		CEF4135B23AA132C00658735 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4135A23AA132C00658735 /* MemberCell.swift */; };
-		CEF4135E23AA1AA300658735 /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4135D23AA1AA300658735 /* MainState.swift */; };
-		CEF4136323AA1D7200658735 /* MainStateAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4136223AA1D7200658735 /* MainStateAction.swift */; };
-		CEF4136623AA1EDB00658735 /* Thunks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4136523AA1EDB00658735 /* Thunks.swift */; };
+		CEF4135E23AA1AA300658735 /* MembersState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4135D23AA1AA300658735 /* MembersState.swift */; };
+		CEF4136323AA1D7200658735 /* MembersAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4136223AA1D7200658735 /* MembersAction.swift */; };
+		CEF4136623AA1EDB00658735 /* MembersThunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF4136523AA1EDB00658735 /* MembersThunk.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +60,9 @@
 		706A9B87138D91FC325D2664 /* Pods_ReSwiftApp_ReSwiftAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReSwiftApp_ReSwiftAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		897A27CAD68C5E043D5878EF /* Pods-ReSwiftApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReSwiftApp.release.xcconfig"; path = "Target Support Files/Pods-ReSwiftApp/Pods-ReSwiftApp.release.xcconfig"; sourceTree = "<group>"; };
 		CE7757AA298842D44B23D619 /* Pods-ReSwiftApp-ReSwiftAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReSwiftApp-ReSwiftAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ReSwiftApp-ReSwiftAppUITests/Pods-ReSwiftApp-ReSwiftAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		CED4617223B06747008E9021 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		CED4617523B0687D008E9021 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		CED4617723B0690C008E9021 /* MembersReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersReducer.swift; sourceTree = "<group>"; };
 		CEF4131123AA046200658735 /* ReSwiftApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReSwiftApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF4131423AA046200658735 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEF4131623AA046200658735 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,9 +86,9 @@
 		CEF4135523AA0BF600658735 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		CEF4135723AA0C5300658735 /* HeadImg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadImg.swift; sourceTree = "<group>"; };
 		CEF4135A23AA132C00658735 /* MemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
-		CEF4135D23AA1AA300658735 /* MainState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
-		CEF4136223AA1D7200658735 /* MainStateAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStateAction.swift; sourceTree = "<group>"; };
-		CEF4136523AA1EDB00658735 /* Thunks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thunks.swift; sourceTree = "<group>"; };
+		CEF4135D23AA1AA300658735 /* MembersState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersState.swift; sourceTree = "<group>"; };
+		CEF4136223AA1D7200658735 /* MembersAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersAction.swift; sourceTree = "<group>"; };
+		CEF4136523AA1EDB00658735 /* MembersThunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersThunk.swift; sourceTree = "<group>"; };
 		D7C2B903738DCBD8AE252344 /* Pods-ReSwiftApp-ReSwiftAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReSwiftApp-ReSwiftAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-ReSwiftApp-ReSwiftAppUITests/Pods-ReSwiftApp-ReSwiftAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E2EB4C388FF14828ACFE009F /* Pods_ReSwiftApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReSwiftApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -115,6 +121,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CED4617423B0684F008E9021 /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				CED4617523B0687D008E9021 /* AppReducer.swift */,
+				CED4617723B0690C008E9021 /* MembersReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
 		CEF4130823AA046100658735 = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +160,7 @@
 				CEF4135423AA0BAC00658735 /* Models */,
 				CEF4135C23AA1A6400658735 /* State */,
 				CEF4136123AA1D5E00658735 /* Actions */,
+				CED4617423B0684F008E9021 /* Reducers */,
 				CEF4136423AA1EC200658735 /* Thunks */,
 				CEF4134523AA060E00658735 /* ViewControllers */,
 				CEF4131A23AA046200658735 /* Main.storyboard */,
@@ -232,7 +248,8 @@
 		CEF4135C23AA1A6400658735 /* State */ = {
 			isa = PBXGroup;
 			children = (
-				CEF4135D23AA1AA300658735 /* MainState.swift */,
+				CED4617223B06747008E9021 /* AppState.swift */,
+				CEF4135D23AA1AA300658735 /* MembersState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -240,7 +257,7 @@
 		CEF4136123AA1D5E00658735 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				CEF4136223AA1D7200658735 /* MainStateAction.swift */,
+				CEF4136223AA1D7200658735 /* MembersAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -248,7 +265,7 @@
 		CEF4136423AA1EC200658735 /* Thunks */ = {
 			isa = PBXGroup;
 			children = (
-				CEF4136523AA1EDB00658735 /* Thunks.swift */,
+				CEF4136523AA1EDB00658735 /* MembersThunk.swift */,
 			);
 			path = Thunks;
 			sourceTree = "<group>";
@@ -515,21 +532,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED4617823B0690C008E9021 /* MembersReducer.swift in Sources */,
 				CEF4135823AA0C5300658735 /* HeadImg.swift in Sources */,
 				CEF4134F23AA06FF00658735 /* NetworkRequest.swift in Sources */,
+				CED4617623B0687D008E9021 /* AppReducer.swift in Sources */,
 				CEF4131923AA046200658735 /* ViewController.swift in Sources */,
 				CEF4134C23AA06FF00658735 /* NetworkResponse.swift in Sources */,
-				CEF4136623AA1EDB00658735 /* Thunks.swift in Sources */,
+				CEF4136623AA1EDB00658735 /* MembersThunk.swift in Sources */,
 				CEF4131523AA046200658735 /* AppDelegate.swift in Sources */,
 				CEF4131723AA046200658735 /* SceneDelegate.swift in Sources */,
 				CEF4134D23AA06FF00658735 /* NetworkLogPlugin.swift in Sources */,
 				CEF4135B23AA132C00658735 /* MemberCell.swift in Sources */,
-				CEF4135E23AA1AA300658735 /* MainState.swift in Sources */,
+				CEF4135E23AA1AA300658735 /* MembersState.swift in Sources */,
 				CEF4135023AA06FF00658735 /* Configuration.swift in Sources */,
+				CED4617323B06747008E9021 /* AppState.swift in Sources */,
 				CEF4135323AA07F000658735 /* API.swift in Sources */,
 				CEF4134E23AA06FF00658735 /* NetworkProvider.swift in Sources */,
 				CEF4135623AA0BF600658735 /* Member.swift in Sources */,
-				CEF4136323AA1D7200658735 /* MainStateAction.swift in Sources */,
+				CEF4136323AA1D7200658735 /* MembersAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,9 +8,13 @@
 
 import ReSwift
 
-enum MainStateAction: Action {
+enum MembersAction: Action {
+    case loadingShow
+    case loadingDismiss
     case addMembers(members: [Member], append: Bool)
     case requestMemberError(error: Error, append: Bool)
-    case didSelectRow(Int)
+    case didSelectMember(Member)
+    case cancelSelect
     case beginFooterRefresh
+    case resetFooterRefresh
 }

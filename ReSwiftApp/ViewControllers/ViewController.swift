@@ -11,6 +11,7 @@ import ReSwift
 import MJRefresh
 import DifferenceKit
 
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -28,8 +29,8 @@ class ViewController: UIViewController {
     private lazy var refreshHeader: MJRefreshNormalHeader = {
         let header = MJRefreshNormalHeader { [weak self] in
             guard let `self` = self else { return }
-            self.refreshFooter.resetNoMoreData()
-            mainStore.dispatch(fetchNewMembers)
+            appStore.dispatch(MembersAction.resetFooterRefresh)
+            appStore.dispatch(fetchNewMembers)
         }
         return header
     }()
@@ -38,25 +39,28 @@ class ViewController: UIViewController {
         let footer = MJRefreshAutoNormalFooter { [weak self] in
             guard let `self` = self else { return }
             guard !self.refreshHeader.isRefreshing else { return }
-            mainStore.dispatch(fetchNextPageMembers)
+            appStore.dispatch(fetchNextPageMembers)
         }
         return footer
     }()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        mainStore.subscribe(self)
-        indicatorView.startAnimating()
-        mainStore.dispatch(fetchNewMembers)
+        appStore.subscribe(self) {
+            $0.select {
+                $0.members
+            }
+        }
+        appStore.dispatch(MembersAction.loadingShow)
+        appStore.dispatch(fetchNewMembers)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        mainStore.unsubscribe(self)
+        appStore.unsubscribe(self)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.addSubview(indicatorView)
         tableView.tableFooterView = UIView()
         tableView.mj_header = refreshHeader
@@ -75,6 +79,18 @@ class ViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    private func beginHeaderRefresh() {
+        if !refreshHeader.isRefreshing {
+            refreshHeader.beginRefreshing()
+        }
+    }
+
+    private func beginFooterRefresh() {
+        if !refreshFooter.isRefreshing {
+            refreshFooter.beginRefreshing()
+        }
+    }
+
     private func endHeaderRefresh() {
         if refreshHeader.isRefreshing {
             refreshHeader.endRefreshing()
@@ -89,49 +105,65 @@ class ViewController: UIViewController {
             refreshFooter.endRefreshing()
         }
     }
+
 }
 
 // MARK: - StoreSubscriber
 
 extension ViewController: StoreSubscriber {
 
-    typealias StoreSubscriberStateType = MainState
+    typealias StoreSubscriberStateType = MembersState
 
-    func newState(state: MainState) {
+    func newState(state: MembersState) {
 
-        ///Diff relaod
+        /// Diff relaod
         let changeset = StagedChangeset(source: dataSource, target: state.members)
         tableView.reload(using: changeset, with: .fade) { [weak self] in
             guard let `self` = self else { return }
             self.dataSource = $0
         }
 
-        /// Handle Error
-        if let error = state.error {
+        /// Handle Loading State
+        switch state.loadingState {
+        case .loading:
+            indicatorView.startAnimating()
+        case .success:
+            indicatorView.stopAnimating()
+        case .error(let error):
+            indicatorView.stopAnimating()
             alert(title: "连接错误", message: error.localizedDescription)
+        default:
+            indicatorView.stopAnimating()
+            break
         }
 
         /// 处理点击
         if let selectMember = state.selectMember {
             alert(title: "点击了", message: selectMember.name ?? "")
         }
-        
-        /// 停止加载动画
-        if indicatorView.isAnimating {
-            indicatorView.stopAnimating()
-        }
-        
-        /// 结束刷新
-        if state.endHeaderFresh {
+
+        /// 处理刷新Header状态
+        switch state.headerState {
+        case .refresing:
+            beginHeaderRefresh()
+        case .end:
+            endHeaderRefresh()
+        default:
             endHeaderRefresh()
         }
-        if state.endFooterFresh {
-            endFooterRefresh()
-        }
 
-        /// 没有更多数据了
-        if state.isNoMoreData {
+        /// 处理刷新Footer状态
+        switch state.footerState {
+        case .refresing:
+            beginFooterRefresh()
+        case .end:
+            endFooterRefresh()
+        case .noMoreData:
             refreshFooter.endRefreshingWithNoMoreData()
+        case .resetNoMoreData:
+            refreshFooter.resetNoMoreData()
+        default:
+            endFooterRefresh()
         }
 
         /// 没有数据隐藏Footer
@@ -161,7 +193,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Preload data
         if indexPath.row == dataSource.count - 5, refreshFooter.state != .noMoreData, refreshFooter.state != .refreshing {
-            mainStore.dispatch(MainStateAction.beginFooterRefresh)
+            appStore.dispatch(MembersAction.beginFooterRefresh)
         }
     }
     
@@ -173,7 +205,10 @@ extension ViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        mainStore.dispatch(MainStateAction.didSelectRow(indexPath.row))
+        let member = dataSource[indexPath.row]
+        appStore.dispatch(MembersAction.didSelectMember(member))
+        // cancel Select after selelct
+        appStore.dispatch(MembersAction.cancelSelect)
     }
 
 }

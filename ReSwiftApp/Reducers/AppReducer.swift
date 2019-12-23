@@ -6,4 +6,10 @@
 //  Copyright © 2019 Civel Xu. All rights reserved.
 //
 
-import Foundation
+import ReSwift
+
+func qppReducer(action: Action, state: AppState?) -> AppState {
+    return AppState(
+        members: membersReducer(action: action, state: state?.members)
+    )
+}

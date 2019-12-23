@@ -7,68 +7,33 @@
 //
 
 import ReSwift
-import ReSwiftThunk
-
-let thunksMiddleware: Middleware<MainState> = createThunkMiddleware()
-let mainStore = Store<MainState>(reducer: mainReducer, state: nil, middleware: [thunksMiddleware])
 
 enum LoadingStatus {
-    case none
+    case initial
     case loading
+    case success
+    case error(Error)
+}
+
+enum RefreshHeaderStatus {
+    case initial
+    case refresing
     case end
 }
 
-struct MainState: StateType {
-
-    var currentPage: Int = 0
-    var members: [Member] = []
-    var error: Error?
-    var selectMember: Member?
-
-    var footerRefresh = false
-    var endHeaderFresh = false
-    var endFooterFresh = false
-    var isNoMoreData = false
-
+enum RefreshFooterStatus {
+    case initial
+    case refresing
+    case end
+    case noMoreData
+    case resetNoMoreData
 }
 
-
-func mainReducer(action: Action, state: MainState?) -> MainState {
-
-    var state = state ?? MainState()
-    guard let action = action as? MainStateAction else {
-        return state
-    }
-
-    /// reset store state
-    state.selectMember = nil
-    state.error = nil
-    state.isNoMoreData = false
-    state.footerRefresh = false
-    state.endHeaderFresh = false
-    state.endFooterFresh = false
-
-    switch action {
-    case .addMembers(let members, let append):
-        if !append {
-            state.currentPage = 0
-            state.members.removeAll()
-        }
-        state.endHeaderFresh = !append
-        state.endFooterFresh = append
-        state.members.append(contentsOf: members)
-        state.isNoMoreData = members.count < 20
-        state.currentPage += 1
-    case .requestMemberError(let error, let append):
-        state.error = error
-        state.endHeaderFresh = !append
-        state.endFooterFresh = append
-    case .didSelectRow(let index):
-        guard state.members.count > index else { return state }
-        state.selectMember = state.members[index]
-    case .beginFooterRefresh:
-        state.footerRefresh = true
-    }
-
-    return state
+struct MembersState {
+    var currentPage: Int = 0
+    var members: [Member] = []
+    var selectMember: Member?
+    var loadingState: LoadingStatus = .initial
+    var headerState: RefreshHeaderStatus = .initial
+    var footerState: RefreshFooterStatus = .initial
 }
