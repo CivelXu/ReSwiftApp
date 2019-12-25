@@ -1,5 +1,5 @@
 # ReSwiftApp
 
-Unidirectional Data Flow in Swift
+Unidirectional Data Flow in iOS
 
 Example Use ReSwift architecture App
