@@ -2,4 +2,4 @@
 
 Unidirectional Data Flow in Swift
 
-Example Use ReSwift 
+Example Use ReSwift architecture App
